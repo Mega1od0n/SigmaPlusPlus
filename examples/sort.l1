@@ -1,0 +1,52 @@
+fn swap(a, i, j) {
+    let tmp = a[i];
+    a[i] = a[j];
+    a[j] = tmp;
+    return 0;
+}
+
+fn partition(a, lo, hi) {
+    let pivot = a[hi];
+    let i = lo;
+    let j = lo;
+
+    while (j < hi) {
+        if (a[j] <= pivot) {
+            swap(a, i, j);
+            i = i + 1;
+        }
+        j = j + 1;
+    }
+
+    swap(a, i, hi);
+    return i;
+}
+
+fn qsort(a, lo, hi) {
+    if (lo < hi) {
+        let p = partition(a, lo, hi);
+        qsort(a, lo, p - 1);
+        qsort(a, p + 1, hi);
+    }
+    return 0;
+}
+
+
+fn main() {
+    let n = 10000;
+    let a = array(n);
+
+    let i = 0;
+    while (i < n) {
+        a[i] = rand() % 1000000;
+        i = i + 1;
+    }
+
+    let t0 = time_ms();
+    qsort(a, 0, n - 1);
+    let t1 = time_ms();
+
+    print(t1 - t0);
+
+    return 0;
+}

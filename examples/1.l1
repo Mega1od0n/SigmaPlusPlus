@@ -1,0 +1,37 @@
+fn mul_big(a, len, m) {
+  let base = 1000000000;
+  let carry = 0;
+
+  for (let i = 0; i < len; i = i + 1) {
+    let x = a[i] * m + carry;
+    a[i] = x % base;
+    carry = x / base;
+  }
+
+  while (carry > 0) {
+    a[len] = carry % base;
+    carry = carry / base;
+    len = len + 1;
+  }
+
+  return len;
+}
+
+fn fact_rec(k, a, len) {
+  if (k <= 1) {
+    return len;
+  }
+
+  len = fact_rec(k - 1, a, len);
+  len = mul_big(a, len, k);
+  return len;
+}
+
+fn main() {
+  let a = array(20);
+  a[0] = 1;
+  let len = 1;
+
+  len = fact_rec(21, a, len);
+  print_big(a, len);
+}
